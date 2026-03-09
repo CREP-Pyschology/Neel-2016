@@ -47,3 +47,6 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+.DS_Store
+tracking/Neel CREP list of groups.xlsx
+tracking/Neel et al. (2016) Projects.xlsx

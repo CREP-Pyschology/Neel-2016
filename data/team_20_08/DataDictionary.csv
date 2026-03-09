@@ -1,0 +1,46 @@
+Variable,Variable Name,Measurement unit,Allowed Values,Description
+Gender,gender,Factor,"Female, Male, NA",Participant's gender; NA = Other
+Kids,kids,Factor,"Yes, No",Whether the participant has children
+Marital Status,marital.status,Factor,"Committed Relationship, Dating One, Dating Several, Married, Other, Single",Participant's relationship status
+Religion,religious,Factor,"Atheist,  Catholic, Evangelical Christian, Hindu, Jewish, Muslim, Other, Protestant Christian  ",Participant's religious affiliation 
+Native American,eAmericanIndian,Numeric,0 = No 1 = Yes   note: this allows for participants to select multiple ethnicities,Does the participant have Native American ancestry
+Asian,eAsian,Numeric,1 = No 1 = Yes   note: this allows for participants to select multiple ethnicities,Does the participant have Asian ancestry
+African American,eBlack,Numeric,2 = No 1 = Yes   note: this allows for participants to select multiple ethnicities,Does the participant have African American ancestry
+Hispanic,eHispanic,Numeric,3 = No 1 = Yes   note: this allows for participants to select multiple ethnicities,Does the participant have Hispanic ancestry
+Caucasian,eWhite,Numeric,4 = No 1 = Yes   note: this allows for participants to select multiple ethnicities,Does the participant have Caucasian ancestry
+Pacific Islander,ePacificIslander,Numeric,5 = No 1 = Yes   note: this allows for participants to select multiple ethnicities,Does the participant have Pacific Islander ancestry
+Age in years,age,Numeric,18-120,Age of participant in years
+Childhood resources,ChildhoodResources,Numeric,Min = 1.000 Max = 7.000,Self-reported childhood resources adopted from Neel et al. study
+Childhood stability,ChildhoodStability,Numeric,Min = 1.000 Max = 7.000,Self-reported childhood stability scale adopted from Neel et al. study
+Current resources,CurrentResources,Numeric,Min = 1.000 Max = 7.000,Self-reported current resources adopted from Neel et al. study
+Liberal affiliation,Liberal,Numeric,Min = 1.000 Max = 7.000,Self-reported liberal affiliation scale adopted from Neel et al. study
+Self protection motive,SelfProtection,Numeric,Min = 1.000 Max = 7.000,Self-reported self protection motive scale adopted from Neel et al. study
+Disease avoidance motive,DiseaseAvoidance,Numeric,Min = 1.000 Max = 7.000,Self-reported disease avoidance motive scale adopted from Neel et al. study
+Affiliation group motive,AffiliationGroup,Numeric,Min = 1.000 Max = 7.000,Self-reported affiliation group motive scale adopted from Neel et al. study
+Affiliation exclusion motive,AffiliationExclusion,Numeric,Min = 1.000 Max = 7.000,Self-reported affiliation excusion concern motive scale adopted from Neel et al. study
+Affiliation independence motive,AffiliationIndependence,Numeric,Min = 1.000 Max = 7.000,Self-reported affiliation independence motive scale adopted from Neel et al. study
+Status motive,Status,Numeric,Min = 1.000 Max = 7.000,Self-reported status motive scale adopted from Neel et al. study
+Mate seeking motive,MateSeeking,Numeric,Min = 1.000 Max = 7.000,Self-reported mate seeking motive scale adopted from Neel et al. study
+Mate retention general motive,MateRetentionGeneral,Numeric,Min = 1.000 Max = 7.000,Self-reported mate retention general motive scale adopted from Neel et al. study
+Mate retention breakup concern motive,MateRetentionBreakup,Numeric,Min = 1.000 Max = 7.000,Self-reported mate retention breakup concern motive scale adopted from Neel et al. study
+Kin care family motive,KinCareFamily,Numeric,Min = 1.000 Max = 7.000,Self-reported self kin care family motive scale adopted from Neel et al. study
+Kin care child motive,KinCareChild,Numeric,Min = 1.000 Max = 7.000,Self-reported self kin care child motive scale adopted from Neel et al. study
+Study identification ,sample,Factor,"Neel, Exploratory, Confirmatory","Which study this data was pulled from: Neel = Neel et. al. data , Exploratory = Study 1 data Confirmatory = Study 2 data"
+Marital status recoded,marital.status2,Factor,"Committed , Single, NA  ","Committed = (Committed Relationship, Married); Single = (Dating One, Dating Several, Single); NA = other"
+Religion recoded,religious2,Factor,"Atheist, Theist, Other","Theist = (Catholic, Evangelical Christian, Jewish, Protestant Christian, Muslim, Hindu); Atheist; Other"
+Big 5 Extraversion,Extraversion,Numeric,Min = 1.000 Max = 5.000,Big 5 Extraversion 44 item Scale
+Big 5 Agreeableness,Agreeableness,Numeric,Min = 1.000 Max = 5.000,Big 5 Agreeablenessc 44 item Scale
+Big 5 Openness,Openness,Numeric,Min = 1.000 Max = 5.000,Big 5 Openness 44 item Scale
+Big 5 Neuroticism,Neuroticism,Numeric,Min = 1.000 Max = 5.000,Big 5 Neuroticism 44 item Scale
+Big 5 Conscientiousness,Conscientiousness,Numeric,Min = 1.000 Max = 5.000,Big 5 Conscientiousness 44 item Scale
+Short term mating orientation,STMO,Numeric,Min = 1.000 Max = 5.000,"Sociosexual Orientation Inventory (Jackson & Kirkpatrick, 2007)"
+Long term mating orientation,LTMO,Numeric,Min = 1.000 Max = 5.000,"Sociosexual Orientation Inventory (Jackson & Kirkpatrick, 2007)"
+Perceived Vulnerability to Disease (Infection),PVDInfect,Numeric,Min = 1.000 Max = 7.000,"Perceived Vulnerability to Disease (Duncan, Schaller, & Park, 2009)"
+Perceived Vulnerability to Disease (Germ aversion),PVDGerm,Numeric,Min = 1.000 Max = 7.000,"Perceived Vulnerability to Disease (Duncan, Schaller, & Park, 2009)"
+Perceived Vulnerability to Disease (Combined),PVD,Numeric,Min = 1.000 Max = 7.000,"Perceived Vulnerability to Disease (Duncan, Schaller, & Park, 2009)"
+Dominance,Dominance,Numeric,Min = 1.000 Max = 7.000,"Dominance and Prestige Scales (Cheng, Tracy, & Henrich, 2010)"
+Prestige,Prestige,Numeric,Min = 1.000 Max = 7.000,"Dominance and Prestige Scales (Cheng, Tracy, & Henrich, 2010)"
+Belief in a dangerous world ,BDW,Numeric,Min = 1.000 Max = 7.000,"Belief in a dangerous world (Altemeyer, 1988)"
+Need to Belong,NeedtoBelong,Numeric,Min = 1.000 Max = 7.000,"Need to Belong (Leary, Kelly, Cottrell, & Schreindorfer, 2005)"
+Experiences in Close Relationships (Anxiety),ECRAnxiety,Numeric,Min = 1.000 Max = 7.000,"Experiences in Close Relationships - Revised (Fraley, Waller, & Brennan, 2000)"
+Experiences in Close Relationships (Avoidance),ECRAvoidance,Numeric,Min = 1.000 Max = 7.000,"Experiences in Close Relationships - Revised (Fraley, Waller, & Brennan, 2000)"
