@@ -1,0 +1,272 @@
+---
+title: "Jasmine Beltran Thesis"
+author: "Jasmine Beltran & Jordan Wagge"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, include=FALSE}
+
+packages = c("psych","knitr","correlation","tidyverse","dplyr")
+
+## Now load or install&load all
+package.check <- lapply(
+  packages,
+  FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE)
+    }
+  }
+)
+```
+
+```{r import_data}
+
+data <- read.csv("jrw_27_march.csv") # Import data
+
+# Only keep participants who wanted to contribute data
+# 1 = yes, 2 = no
+
+data <- data[!is.na(data$CT01), ]
+data <- data[data$CT01 == 1, ]
+
+```
+
+```{r demographics}
+
+# Demographics - 
+# % male, female, etc.
+# % race/ethnicity
+# age ranges, M, SD
+# % in a relationship, single, other
+# % parents
+
+```
+
+```{r scales}
+
+# Score Fundamental Social Motive Inventory (all scored 1 SD to 7 SA)
+## Self-Protection Questions: 43, 44, 45, 46R, 47R, 48R
+data$FM_SP <- data$FM01_43 + data$FM01_44 + data$FM01_45 + (8-data$FM01_46) + (8-data$FM01_47) + (8-data$FM01_48)
+## Disease Avoidance Questions: 49, 50, 51, 52R, 53R, 54R
+data$FM_DA <- data$FM01_49 + data$FM01_50 + data$FM01_51 + (8-data$FM01_52) + (8-data$FM01_53) + (8-data$FM01_54)
+## Affiliation (Group): 21, 22, 23, 24R, 27, 15
+data$FM_AG <- data$FM01_21 + data$FM01_22 + data$FM01_23 + data$FM01_27 + data$FM01_15 + (8 - data$FM01_24)
+## Affiliation (Exclusion Concern): 16, 25, 26, 28, 29, 32
+data$FM_AE <- data$FM01_16 + data$FM01_25 + data$FM01_26 + data$FM01_28 + data$FM01_29 + data$FM01_32
+## Affiliation (Independence): 18, 19, 20, 33, 34, 35
+data$FM_AI <- data$FM01_18 + data$FM01_19 + data$FM01_20 + data$FM01_33 + data$FM01_34 + data$FM01_35
+## Status: 7, 8, 9, 12, 13, 14R
+data$FM_S <- data$FM01_07 + data$FM01_08 + data$FM01_09 + data$FM01_12 + data$FM01_13 + (8 - data$FM01_14)
+## Mate Seeking: 1, 2, 3R, 4R, 5R, 6
+data$FM_MS <- data$FM01_01 + data$FM01_02 + data$FM01_06 + (8 - data$FM01_03)+ (8 - data$FM01_04) + (8 - data$FM01_05)
+## Mate Retention (General): 55, 56, 57R, 65R, 66R, 67R
+data$FM_MRG <- data$FM01_55 + data$FM01_56 + (8 - data$FM01_57)+ (8 - data$FM01_65) + (8 - data$FM01_66)+ (8 - data$FM01_67)
+## Mate Retention (Breakup Concern): 58, 59, 60, 62, 63, 64
+data$FM_MRB <- data$FM01_58 + data$FM01_59 + data$FM01_60 + data$FM01_62 + data$FM01_63 + data$FM01_64
+## Kin Care (Family): 36, 37R, 38R, 39R, 41, 42
+data$FM_KCF <- data$FM01_36 + data$FM01_41 + data$FM01_42 + (8 - data$FM01_37)+ (8 - data$FM01_38) + (8 - data$FM01_39)
+## Kin Care (Child): 68, 69, 70R, 71, 72R, 73
+data$FM_KCC <- data$FM01_68 + data$FM01_69 + data$FM01_71 + data$FM01_73 + (8 - data$FM01_70)+ (8 - data$FM01_72) 
+fsm_matrix <- data[c("FM_SP", "FM_DA", "FM_AG", "FM_AE", "FM_AI", "FM_S", "FM_MS", "FM_MRG", "FM_MRB", "FM_KCF", "FM_KCC")]
+
+fsm_cor <- correlation(fsm_matrix)
+summary(fsm_cor)
+
+fsm_sum <- data %>%
+  summarise_at(vars("FM_SP", "FM_DA", "FM_AG", "FM_AE", "FM_AI", "FM_S", "FM_MS", "FM_MRG", "FM_MRB", "FM_KCF", "FM_KCC"), list(mean=mean, sd=sd), na.rm=TRUE)
+
+```
+
+```{r big5}
+# Big Five Inventory (John & Srivastava, 1999)
+# BFI scale scoring (“R” denotes reverse-scored items): 
+# Scored from 1 (SD) to 5 (SA)
+# Extraversion:  1, 6R, 11, 16, 21R, 26, 31R, 36 
+data$bf_e <- with(data, BF01_01 + (6-BF01_06) + BF01_11 + BF01_16 + (6-BF01_21) + BF01_26 + (6-BF01_31) + BF01_36)
+
+# Agreeableness:  2R, 7, 12R, 17, 22, 27R, 32, 37R, 42 
+data$bf_a <- with(data, (6 - BF01_02) + BF01_07 + (6 - BF01_12) + BF01_17 + BF01_22 + (6 - BF01_27) + BF01_32 + (6 - BF01_37) + BF01_42)
+
+# Conscientiousness:  3, 8R, 13, 18R, 23R, 28, 33, 38, 43R 
+data$bf_c <- with(data, BF01_03 + (6-BF01_08) + BF01_13 + (6-BF01_18) + (6-BF01_23) + BF01_28 + BF01_33 + BF01_38 + (6-BF01_43))
+
+# Neuroticism:  4, 9R, 14, 19, 24R, 29, 34R, 39 
+data$bf_n <- with(data, BF01_04 + (6-BF01_09) + BF01_14 + BF01_19 + (6-BF01_24), BF01_29 + (6-BF01_34) + BF01_39)
+
+# Openness:  5, 10, 15, 20, 25, 30, 35R, 40, 41R, 44 
+data$bf_o <- with(data, BF01_05 + BF01_10 + BF01_15 + BF01_20 + BF01_25 + BF01_30 + (6-BF01_35) + BF01_40 + (6-BF01_41) + BF01_44)
+
+```
+
+```{r soi}
+
+# Sociosexual Orientation Inventory (Jackson & Kirkpatrick, 2007)
+## Short term mating orientation
+# SO01_01 through SO01_10, no reverse code
+data$SOI_stmo <- with(data, SO01_01 + SO01_02 + SO01_03 + SO01_04 + SO01_05 + SO01_06 + SO01_07 + SO01_08 + SO01_09 + SO01_10)
+## Long-term mating orientation
+# SO01_11 through SO01_19, reverse code 17
+data$SOI_ltmo <- with(data, SO01_11 + SO01_12 + SO01_13 + SO01_14 + SO01_15 + SO01_16 + (6-SO01_17) + SO01_18 + SO01_19)
+
+```
+
+```{r pvd}
+# Perceived Vulnerability to Disease
+## Perceived Infectability: 8, 12R, 2, 14R, 10, 5R, 6
+data$pvd_infectability <- with(data, PV02_08 + (8-PV02_12) + PV02_02 + (8-PV02_14) + PV02_10 + (8-PV02_05) + PV02_06)
+
+## Germ Aversion: 7, 15, 4, 9, 3R, 1, 13R, 11R
+data$pvd_germ <- with(data, PV02_07 + PV02_15 + PV02_09 + (8-PV02_03) + PV02_01 + (8-PV02_13) + (8-PV02_11))
+```
+
+```{r dominance_and_prestige}
+# Dominance and prestige scales: scored 1 through 7
+## Dominance: 3, 5, 7, 9, 10 (reversed), 11, 12 (reversed), 16
+data$dp_dominance <- with(data, DP01_03 + DP01_05 + DP01_07 + DP01_09 + DP01_11 + DP01_16, + (8-DP01_10) + (8-DP01_12))
+
+## Prestige: 1, 2 (reversed), 4, 6 (reversed), 8, 13, 14, 15, 17 (reversed)
+data$dp_prestige <- with(data, DP01_01 + DP01_04 + DP01_08 + DP01_13 + DP01_14 + DP01_15 + (8-DP01_17) + (8-DP01_02) + (8-DP01_06))
+```
+
+```{r belief_dangerous_world}
+# Belief in a dangerous world (take average) - scored 1 to 7
+## 1, 2R, 3, 4R, 5R, 6, 7R, 8, 9R, 10, 11, 12R
+data$bd_total <- with(data, BD01_01 + (8-BD01_02)+BD01_03+(8-BD01_04)+(8-BD01_05)+BD01_06+(8-BD01_07)+BD01_08+(8-BD01_09)+BD01_10+BD01_11+(8-BD01_12))
+
+```
+
+```{r need_to_belong}
+# Need to belong - Respondents indicate the degree to which each statement is true or characteristic of them on a 5-point scale (1 = not at all, 2 = slightly, 3 = moderately, 4 = very, 5 = extremely). (R) indicates that the item is reverse-scored.
+# 1R, 2, 3R, 4, 5, 6, 7R, 8, 9, 10
+data$n2b <- with(data, (6-NB01_01)+ NB01_02 + (6-NB01_03) + NB01_04 + NB01_05 + NB01_06 + (6-NB01_07) + NB01_08 + NB01_09 + NB01_10)
+```
+
+```{r ecr-r}
+# Experiences in close relationships - revised - response options 1 through 7
+## Anxiety: 1, 2, 3, 4, 5, 6, 7, 8, 9R, 10, 11R, 12, 13, 14, 15, 16, 17, 18
+data$ecr_anxiety <- with(data, EC01_01 + EC01_02 + EC01_03 + EC01_04 + EC01_05 + EC01_06 + EC01_07 + EC01_08 + (8-EC01_09) + EC01_10 + (8-EC01_11) + EC01_12 + EC01_13 + EC01_14 + EC01_15 + EC01_16 + EC01_17 + EC01_18)
+## Avoidance: 19, 20R, 21, 22R, 23, 24, 25, 26R, 27R, 28R, 29R, 30R, 31R, 32, 33R, 34R, 35R, 36R
+data$ecr_avoidance <- with(data, EC01_19 + (8-EC01_20) + EC01_21 + (8-EC01_22) + EC01_23 + EC01_24 + EC01_25 + (8-EC01_26)+ (8-EC01_27) + (8-EC01_28) + (8-EC01_29) + (8-EC01_30) + (8-EC01_31) + EC01_32 + (8-EC01_33)+ (8-EC01_34)+ (8-EC01_35)+(8-EC01_36))
+```
+
+# Life Data Questions
+
+```{r life_data}
+
+# Define the range of variable names to recode
+variable_names <- c(paste0("LD02_", sprintf("%02d", 1:52)), 
+                    paste0("LD03_", sprintf("%02d", 1:20)))
+
+# Recode the variables
+data <- data %>%
+  mutate(across(all_of(variable_names), ~ case_when(
+    . == 1  ~ 0,
+    . == -9 ~ NA_real_,
+    TRUE    ~ 1
+  )))
+
+# Recode the specified variables
+data <- data %>%
+  mutate(across(c(LD04_01, LD04_02, LD04_03, LD04_04, LD04_05, LD04_06, LD04_07, LD04_08),
+                ~ case_when(
+                    . == 1  ~ 1,
+                    . == 2  ~ 0,
+                    . == -9 ~ NA_real_,
+                    TRUE    ~ .
+                )))
+
+
+```
+
+```{r life_history}
+# Relationship Status 
+data$CR02 <- as.numeric(data$CR02)
+data <- data %>%
+  mutate(CR02 = recode(CR02, `5` = -1, `1` = 1, `2` = 1, `3` = 1, `4` = 1, .default = NA_real_))
+
+# Parent Status
+data$CR01 <- ifelse(data$CR01 == 1, 1,
+                ifelse(data$CR01 == 2, -1,
+                       ifelse(data$CR01 == -9 | is.na(data$CR01), NA, NA)))
+
+# Childhood Stability
+# Three items 1 through 7, high scores = more predictability
+# DM 11 + DM 12 + DM 13R
+data$DM11_all <- apply(data[, paste0("DM11_", sprintf("%02d", 1:7))], 1, function(x) {
+  which(x == 2)[1] # Get the index of the first occurrence of 2
+})
+
+# Replace NA with 0 or another value if no '2' was found
+data$DM11_all[is.na(data$DM11_all)] <- 0
+
+data$DM12_all <- apply(data[, paste0("DM12_", sprintf("%02d", 1:7))], 1, function(x) {
+  which(x == 2)[1] # Get the index of the first occurrence of 2
+})
+
+# Replace NA with 0 or another value if no '2' was found
+data$DM12_all[is.na(data$DM12_all)] <- 0
+
+data$DM13_all <- apply(data[, paste0("DM13_", sprintf("%02d", 1:7))], 1, function(x) {
+  which(x == 2)[1] # Get the index of the first occurrence of 2
+})
+
+# Replace NA with 0 or another value if no '2' was found
+data$DM13_all[is.na(data$DM13_all)] <- 0
+
+# Childhood stability total
+data$childhood_stability <- with(data, DM11_all + DM12_all + (8-DM13_all))
+
+subset_data <- data %>%
+  select("DM11_all", "DM12_all","DM13_all")
+
+# View the first few rows of the subsetted data
+alpha_DM <- psych::alpha(subset_data)
+print(alpha_DM$total$raw_alpha)
+```
+
+```{r resources}
+# Childhood Resources - 4 is reverse coded
+data$childhood_resources <- with(data, DM10_01 + DM10_02 + DM10_03 + (8-DM10_04))
+
+# Current Resources - no reverse coding
+data$current_resources <- with(data, DM10_05, DM10_06, DM10_07, DM10_08)
+
+
+
+```
+
+```{r locus_of_control}
+# Assuming your data frame is named 'data'
+# Specify the relevant variables
+relevant_vars <- c("LC02_01", "LC03_03", "LC04_02", "LC05_02", "LC06_01", "LC07_01", "LC09_01", "LC10_02", "LC11_02", "LC12_02", "LC13_02", "LC15_02", "LC16_01", "LC17_01", "LC18_01", "LC20_01", "LC21_01", "LC22_02", "LC23_01", "LC25_01", "LC26_02", "LC28_02", "LC29_01")
+
+# Calculate the LOC_total
+data$LOC_total <- rowSums(data[relevant_vars] == 2, na.rm = TRUE)
+
+
+
+```
+
+
+```{r ses_ladder}
+# MacArthur Ladder/SES
+# change -9 to NA
+data$SS01[data$SS01 == -9] <- NA
+
+```
+
+```{r save_processed_data}
+
+write.csv(data, "jrw_27_march_processed.csv")
+
+```
+
+
