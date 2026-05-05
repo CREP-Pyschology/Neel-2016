@@ -1,0 +1,27 @@
+---
+title: "Data Merging"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(rio)
+```
+
+## Data
+
+```{r}
+#19-40
+df1 <- import("data/team_19_40/NeelData.sav")
+
+#20_08
+df2 <- import("data/team_20_08/Data sets and code/rawData.csv")
+```
